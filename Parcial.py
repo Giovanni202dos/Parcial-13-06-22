@@ -31,7 +31,7 @@ lista_de_alertas_por_fecha=Lista()
 lista_de_alertas_nombre_de_dino= Lista()
 monitor_de_informes= Lista()
 
-file=open('C:/Users/daniel milesi/Documents/Programación/Segundo Año/Algoritmo/Parcial/alerts.txt')
+file=open('alerts.txt')
 lineas=file.readlines()
 
 #CARGO 
