@@ -241,4 +241,25 @@ def barrido_buscar_y_guardar_las_zonas_de_dino_x(lista,dino,lista_a_guardar):
 barrido_buscar_y_guardar_las_zonas_de_dino_x(lista_de_alertas_por_fecha,'Compsognathus',lista_de_las_zonas_de_dino_x)
 lista_de_las_zonas_de_dino_x.barrido()
 #-----------------------------------------
+print('ejercicio de descifrar la contrasenia')
+def contra(numero):
+    #print(numero)
+    if numero in range(33,48):
+        #print('contrasenia', numero)
+        return numero
+    elif numero%3==0:
+        numero=(numero//2)+9
+        return contra(numero)
+    else:
+        numero=numero-14
+        return contra(numero)
 
+
+vec=[ord('m'),ord('o'),ord('s'),ord('q'),ord('u'),ord('i'),ord('t'),ord('o')]
+i=0
+la_nueva_contra=''
+while i<len(vec):
+    k=str(contra(vec[i]))
+    la_nueva_contra=la_nueva_contra+k
+    i+=1
+print('la contrasenia es: ',la_nueva_contra)
