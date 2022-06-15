@@ -25,7 +25,7 @@ class Alertt:
         self.nombre_dino = nombre_dino
     
     def __str__(self):
-        return f"{self.time},{self.zone_code},{self.dino_number},{self.alert_level}, ,{self.nombre_dino}"
+        return f"{self.time},{self.zone_code},{self.dino_number},{self.alert_level},{self.nombre_dino}"
 
 lista_de_alertas_por_fecha=Lista()
 lista_de_alertas_nombre_de_dino= Lista()
@@ -33,14 +33,6 @@ monitor_de_informes= Lista()
 
 file=open('alerts.txt')
 lineas=file.readlines()
-
-#CARGO 
-lineas.pop(0)   #le quito la cabezera q solo mostrabrab como estaba organizado el archivo
-for i in lineas:
-    dato=i.split(';')                       #tengo el vector creado con las separcaion de ";"
-    #print(dato)
-    #dato.pop(-1)
-    lista_de_alertas_por_fecha.insertar(Alertt(dato[0],dato[1],dato[2],dato[3]),'time')
 
 #funcion
 def tomar_nombre_segun_numero(num):
@@ -54,6 +46,15 @@ def tomar_nombre_segun_numero(num):
         else:
             #print('no')
             i+=1
+#CARGO 
+lineas.pop(0)   #le quito la cabezera q solo mostrabrab como estaba organizado el archivo
+for i in lineas:
+    dato=i.split(';')                       #tengo el vector creado con las separcaion de ";"
+    nombre=tomar_nombre_segun_numero(int(dato[2]))
+    #print(dato)
+    #dato.pop(-1)
+    k=dato[3][0:-1]
+    lista_de_alertas_por_fecha.insertar(Alertt(dato[0],dato[1],dato[2],k,nombre),'time')
 
 i=0
 for i in lineas:
@@ -194,4 +195,50 @@ for i in range(0,cola_de_dino_carnivoros.tamanio()):
     dato=cola_de_dino_carnivoros.atencion()
     if dato.zone_code!='EPC944':
         print(dato)
+#-----------------------------------------                                              
+
+#-----------------------------------------
+listado_de_dino_a_pedido_del_cliente=Lista()
+print()
+#funcion para buscar dino x
+def buscar_dino(lista,dino):
+    i=0
+    while i<lista.tamanio():
+        dato=lista.obtener_elemento(i)
+        if dino in dato.name:
+            return dato
+        i+=1
+#guardamos info de  dino x a pedido del cliente
+print('guardamos info de  dino x a pedido del cliente')
+dato=buscar_dino(monitor_de_informes,'Raptors')
+if dato!=None:
+    listado_de_dino_a_pedido_del_cliente.insertar(dato,'name')
+else:
+    print('dino no encontrado')
+
+dato=buscar_dino(monitor_de_informes,'Carnotaurus')
+if dato!=None:
+    listado_de_dino_a_pedido_del_cliente.insertar(dato,'name')
+else:
+    print('dino no encontrado')
+
+listado_de_dino_a_pedido_del_cliente.barrido()
+print()
+#----
+#guardar las zonas donde se pueden encontrar un dino x
+print('guardar las zonas donde se pueden encontrar un dino x')
+lista_de_las_zonas_de_dino_x=Lista()
+def barrido_buscar_y_guardar_las_zonas_de_dino_x(lista,dino,lista_a_guardar):
+    i=0
+    while i<lista.tamanio():
+        dato=lista.obtener_elemento(i)
+        if dino in dato.nombre_dino:
+            zonas=dato.zone_code
+            lista_a_guardar.insertar(zonas)
+        i+=1
+    if lista_a_guardar.tamanio()==0:
+        print('dino no existe')
+barrido_buscar_y_guardar_las_zonas_de_dino_x(lista_de_alertas_por_fecha,'Compsognathus',lista_de_las_zonas_de_dino_x)
+lista_de_las_zonas_de_dino_x.barrido()
+#-----------------------------------------
 
